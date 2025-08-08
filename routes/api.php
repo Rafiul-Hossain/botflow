@@ -34,9 +34,7 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api')
 
 
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
-    Route::get('/admin-only', function () {
-        return response()->json(['message' => 'Hello Admin!']);
-    });
+    Route::put('/update-password', [AuthController::class, 'updatePassword']);
 });
 
 Route::middleware(['auth:api', 'role:user'])->group(function () {
