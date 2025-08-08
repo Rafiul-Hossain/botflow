@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,9 +19,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'user_name',
         'email',
         'password',
+        'agreed_to_terms',
+        'role',
     ];
 
     /**
@@ -32,6 +35,18 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    // ✅ Add these methods:
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();  // typically the user id
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     /**
      * The attributes that should be cast.
