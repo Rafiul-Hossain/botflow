@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +49,16 @@ Route::middleware(['auth:api', 'role:admin,user'])->group(function () {
         return response()->json(['message' => 'Hello Admin or User!']);
     });
 });
+
+
+
+Route::get('/services', [ApiController::class, 'services']);
+Route::get('/balance', [ApiController::class, 'balance']);
+Route::post('/order', [ApiController::class, 'order']);
+Route::get('/status/{id}', [ApiController::class, 'status']);
+Route::post('/multi-status', [ApiController::class, 'multiStatus']);
+Route::post('/refill/{id}', [ApiController::class, 'refill']);
+Route::post('/multi-refill', [ApiController::class, 'multiRefill']);
+Route::get('/refill-status/{id}', [ApiController::class, 'refillStatus']);
+Route::post('/multi-refill-status', [ApiController::class, 'multiRefillStatus']);
+Route::post('/cancel', [ApiController::class, 'cancel']);
