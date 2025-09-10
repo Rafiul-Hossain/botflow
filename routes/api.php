@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\NewSubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,3 +64,26 @@ Route::post('/multi-refill', [ApiController::class, 'multiRefill']);
 Route::get('/refill-status/{id}', [ApiController::class, 'refillStatus']);
 Route::post('/multi-refill-status', [ApiController::class, 'multiRefillStatus']);
 Route::post('/cancel', [ApiController::class, 'cancel']);
+
+//........Provider Routes................................................................
+
+// List all providers
+Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');
+// Create a new provider
+Route::post('/providers', [ProviderController::class, 'store'])->name('providers.store');
+// Show a single provider by ID
+Route::get('/providers/{id}', [ProviderController::class, 'show'])->name('providers.show');
+// Update a provider by ID
+Route::put('/providers/{id}', [ProviderController::class, 'update'])->name('providers.update');
+// Delete a provider by ID
+Route::delete('/providers/{id}', [ProviderController::class, 'destroy'])->name('providers.destroy');
+
+
+//..........New Subscription Routes..................................................
+
+
+Route::get('/new-subscriptions', [NewSubscriptionController::class, 'index'])->name('new_subscriptions.index');
+Route::post('/new-subscriptions', [NewSubscriptionController::class, 'store'])->name('new_subscriptions.store');
+Route::get('/new-subscriptions/{id}', [NewSubscriptionController::class, 'show'])->name('new_subscriptions.show');
+Route::put('/new-subscriptions/{id}', [NewSubscriptionController::class, 'update'])->name('new_subscriptions.update');
+Route::delete('/new-subscriptions/{id}', [NewSubscriptionController::class, 'destroy'])->name('new_subscriptions.destroy');
