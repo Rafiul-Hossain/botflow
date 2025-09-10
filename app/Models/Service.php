@@ -9,7 +9,6 @@ class Service extends Model
 {
     use HasFactory;
         protected $fillable = [
-        'service_id',
         'name',
         'type',
         'rate',
@@ -21,4 +20,9 @@ class Service extends Model
         'cancel',
         'category',
     ];
+
+    public function updates()
+    {
+        return $this->hasMany(Update::class);
+    }
 }

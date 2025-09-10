@@ -94,7 +94,7 @@ class AuthController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'user_name' => 'required|string|max:255|unique:users,user_name',
+                'user_name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:6|same:confirm_password',
                 'confirm_password' => 'required|string|min:6',
@@ -142,7 +142,7 @@ class AuthController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'emailOrPassword' => 'required|string',  // can be user_name or email
+                'email' => 'required|string',  // can be user_name or email
                 'password' => 'required|string',
             ]);
 
@@ -154,7 +154,7 @@ class AuthController extends Controller
                 ], 400);
             }
 
-            $login = $request->emailOrPassword;
+            $login = $request->email;
 
             // Find user by user_name OR email
             $user = User::where('user_name', $login)

@@ -1,0 +1,150 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Service;
+use Exception;
+
+class ServiceController extends Controller
+{
+    /**
+     * Display a listing of services.
+     */
+    public function index()
+    {
+        try {
+            $services = Service::all();
+
+            return response()->json([
+                'success' => true,
+                'data' => $services
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch services',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Store a newly created service.
+     */
+    public function store(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'name'         => 'required|string|max:255',
+                'type'         => 'nullable|string|max:255',
+                'rate'         => 'required|numeric|min:0',
+                'custom_rate'  => 'nullable|numeric|min:0',
+                'min'          => 'required|integer|min:1',
+                'max'          => 'required|integer|min:1',
+                'dripfeed'     => 'boolean',
+                'refill'       => 'boolean',
+                'cancel'       => 'boolean',
+                'category'     => 'nullable|string|max:255',
+            ]);
+
+            $service = Service::create($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Service created successfully',
+                'data' => $service
+            ], 201);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create service',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Display the specified service.
+     */
+    public function show($id)
+    {
+        try {
+            $service = Service::findOrFail($id);
+
+            return response()->json([
+                'success' => true,
+                'data' => $service
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Service not found',
+                'error' => $e->getMessage()
+            ], 404);
+        }
+    }
+
+    /**
+     * Update the specified service.
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $validated = $request->validate([
+                'name'         => 'required|string|max:255',
+                'type'         => 'nullable|string|max:255',
+                'rate'         => 'required|numeric|min:0',
+                'custom_rate'  => 'nullable|numeric|min:0',
+                'min'          => 'required|integer|min:1',
+                'max'          => 'required|integer|min:1',
+                'dripfeed'     => 'boolean',
+                'refill'       => 'boolean',
+                'cancel'       => 'boolean',
+                'category'     => 'nullable|string|max:255',
+            ]);
+
+            $service = Service::findOrFail($id);
+            $service->update($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Service updated successfully',
+                'data' => $service
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update service',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Remove the specified service.
+     */
+    public function destroy($id)
+    {
+        try {
+            $service = Service::findOrFail($id);
+            $service->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Service deleted successfully'
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete service',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+}

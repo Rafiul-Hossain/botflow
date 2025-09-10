@@ -4,6 +4,10 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UpdateController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +27,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+ Route::get('/test', [UpdateController::class, 'test']);
 
 Route::post('password/email', [AuthController::class, 'sendResetOTP']);
 Route::post('password/verify-otp', [AuthController::class, 'verifyResetOTP'])->name('password.verify-otp');
@@ -62,3 +68,40 @@ Route::post('/multi-refill', [ApiController::class, 'multiRefill']);
 Route::get('/refill-status/{id}', [ApiController::class, 'refillStatus']);
 Route::post('/multi-refill-status', [ApiController::class, 'multiRefillStatus']);
 Route::post('/cancel', [ApiController::class, 'cancel']);
+
+
+//Service management
+Route::prefix('services')->group(function () {
+    Route::get('/', [ServiceController::class, 'index']);
+    Route::post('/', [ServiceController::class, 'store']);
+    Route::get('/{id}', [ServiceController::class, 'show']);
+    Route::put('/{id}', [ServiceController::class, 'update']);
+    Route::delete('/{id}', [ServiceController::class, 'destroy']);
+});
+
+//Update management
+Route::prefix('updates')->group(function () {
+    Route::get('/', [UpdateController::class, 'index']);
+    Route::post('/', [UpdateController::class, 'store']);
+    Route::get('/{id}', [UpdateController::class, 'show']);
+    Route::put('/{id}', [UpdateController::class, 'update']);
+    Route::delete('/{id}', [UpdateController::class, 'destroy']);
+});
+
+//Country management
+Route::prefix('countries')->group(function () {
+    Route::get('/', [CountryController::class, 'index']);
+    Route::post('/', [CountryController::class, 'store']);
+    Route::get('/{id}', [CountryController::class, 'show']);
+    Route::post('/{id}', [CountryController::class, 'update']);
+    Route::delete('/{id}', [CountryController::class, 'destroy']);
+});
+
+//Country management
+Route::prefix('categories')->group(function () {
+    Route::get('/', [CategoryController::class, 'index']);
+    Route::post('/', [CategoryController::class, 'store']);
+    Route::get('/{id}', [CategoryController::class, 'show']);
+    Route::put('/{id}', [CategoryController::class, 'update']);
+    Route::delete('/{id}', [CategoryController::class, 'destroy']);
+});
