@@ -13,6 +13,15 @@ class UpdateController extends Controller
     /**
      * Display a listing of updates.
      */
+
+    Private $apiUrl = 'https://global-smm.com/api/v2';
+
+    private $apiKey;
+
+    public function _construct(){
+        $this->apikey = config('services.smm.key');
+    }
+
     public function index()
     {
         try {
@@ -163,16 +172,21 @@ class UpdateController extends Controller
         }
     }
 
-    public function test()
+    public function bulkfollows()
     {
-        //dd("test");
-        // Example external API call
-       $data = Http::get('https://dummyjson.com/products?delay=10');
+
+        $url = "https://bulkfollows.com/api/v2";
+
+        $response = Http::asForm()->post($url, [
+            'key'    => '212449d44b8c21bd3d55409649d52355', // your API key
+            'action' => 'services', // example action
+        ]);
 
         return response()->json([
             'success' => true,
-            'message' => 'UpdateController is working',
-            'data' => $data->json(),
+            'message' => 'Bulkfollows API response',
+            'data' => $response->json(), // returns array of services
         ]);
     }
 }
+

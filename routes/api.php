@@ -69,10 +69,13 @@ Route::get('/refill-status/{id}', [ApiController::class, 'refillStatus']);
 Route::post('/multi-refill-status', [ApiController::class, 'multiRefillStatus']);
 Route::post('/cancel', [ApiController::class, 'cancel']);
 
+//create new route for bulkfollows
+Route::get('/bulkfollows', [UpdateController::class, 'bulkfollows']);
+
 
 //Service management
 Route::prefix('services')->group(function () {
-    Route::get('/', [ServiceController::class, 'index']);
+    // Route::get('/', [ServiceController::class, 'index']);
     Route::post('/', [ServiceController::class, 'store']);
     Route::get('/{id}', [ServiceController::class, 'show']);
     Route::put('/{id}', [ServiceController::class, 'update']);
