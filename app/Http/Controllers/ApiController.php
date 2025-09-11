@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Http;
 class ApiController extends Controller
 {
     /** API URL */
-    private $apiUrl = 'https://global-smm.com/api/v2';
+    private $apiUrl = 'https://bulkfollows.com/api/v2';
+    //https://global-smm.com/api/v2
+    //https://bulkfollows.com/api/v2
 
     /** Your API key */
     private $apiKey;
@@ -131,6 +133,7 @@ class ApiController extends Controller
             'message' => 'API request failed',
             'status' => $response->status()
         ], $response->status());
+        
     }
 }
 
