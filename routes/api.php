@@ -10,6 +10,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UpdateController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ClientController;
 
 
 /*
@@ -136,3 +137,12 @@ Route::prefix('categories')->group(function () {
     Route::delete('/{id}', [CategoryController::class, 'destroy']);
 });
 
+//..................client....................................................
+
+// routes/api.php
+
+Route::get   ('/clients',       [ClientController::class, 'index']);
+Route::get   ('/clients/{id}',  [ClientController::class, 'show']);
+Route::post  ('/clients',       [ClientController::class, 'store']);
+Route::put   ('/clients/{id}',  [ClientController::class, 'update']);
+Route::delete('/clients/{id}',  [ClientController::class, 'destroy']);
