@@ -22,7 +22,7 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
     'smm' => [
-        'key' => env('SMM_API_KEY'),
+        'key' => env('BULKFLOW_API_KEY'),
     ],
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

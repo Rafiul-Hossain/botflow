@@ -13,10 +13,10 @@ return new class extends Migration {
             $table->unsignedBigInteger('service_id'); // From SMM API
             $table->string('name');
             $table->string('type')->nullable();
-            $table->decimal('rate', 10, 4);
+            $table->decimal('rate', 10, 4)->nullable(); // Original price from SMM API
             $table->decimal('custom_rate', 10, 4)->nullable(); // Admin-adjusted price
-            $table->integer('min');
-            $table->integer('max');
+            $table->integer('min')->default(0);
+            $table->integer('max')->default(0);
             $table->boolean('dripfeed')->default(false);
             $table->boolean('refill')->default(false);
             $table->boolean('cancel')->default(false);
