@@ -25,4 +25,8 @@ class Service extends Model
     {
         return $this->hasMany(Update::class);
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

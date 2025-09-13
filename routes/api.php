@@ -10,6 +10,10 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UpdateController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReferralController;
+use App\Http\Controllers\ReferralPayoutController;
 
 
 /*
@@ -136,3 +140,42 @@ Route::prefix('categories')->group(function () {
     Route::delete('/{id}', [CategoryController::class, 'destroy']);
 });
 
+
+
+//Orders management
+Route::prefix('orders')->group(function () {
+    Route::get('/', [OrderController::class, 'index']);
+    Route::post('/', [OrderController::class, 'store']);
+    Route::get('/{id}', [OrderController::class, 'show']);
+    Route::put('/{id}', [OrderController::class, 'update']);
+    Route::delete('/{id}', [OrderController::class, 'destroy']);
+});
+
+//Payments management
+Route::prefix('payments')->group(function () {
+    Route::get('/', [PaymentController::class, 'index']);
+    Route::post('/', [PaymentController::class, 'store']);
+    Route::get('/{id}', [PaymentController::class, 'show']);
+    Route::put('/{id}', [PaymentController::class, 'update']);
+    Route::delete('/{id}', [PaymentController::class, 'destroy']);
+});
+
+
+//Referrals management
+Route::prefix('referrals')->group(function () {
+    Route::get('/', [ReferralController::class, 'index']);
+    Route::post('/', [ReferralController::class, 'store']);
+    Route::get('/{id}', [ReferralController::class, 'show']);
+    Route::put('/{id}', [ReferralController::class, 'update']);
+    Route::delete('/{id}', [ReferralController::class, 'destroy']);
+});
+
+
+//Referral Payouts management
+Route::prefix('referral-payouts')->group(function () {
+    Route::get('/', [ReferralPayoutController::class, 'index']);
+    Route::post('/', [ReferralPayoutController::class, 'store']);
+    Route::get('/{id}', [ReferralPayoutController::class, 'show']);
+    Route::put('/{id}', [ReferralPayoutController::class, 'update']);
+    Route::delete('/{id}', [ReferralPayoutController::class, 'destroy']);
+});
