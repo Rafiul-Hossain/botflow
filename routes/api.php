@@ -11,7 +11,7 @@ use App\Http\Controllers\UpdateController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
-
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -146,3 +146,26 @@ Route::get   ('/clients/{id}',  [ClientController::class, 'show']);
 Route::post  ('/clients',       [ClientController::class, 'store']);
 Route::put   ('/clients/{id}',  [ClientController::class, 'update']);
 Route::delete('/clients/{id}',  [ClientController::class, 'destroy']);
+
+
+//....................................ticket............................................................
+
+
+
+
+Route::prefix('tickets')->name('tickets.')->group(function () {
+    Route::get   ('/',         [TicketController::class, 'index'])->name('index');
+    Route::post  ('/',         [TicketController::class, 'store'])->name('store');
+    Route::get   ('/{id}',     [TicketController::class, 'show'])->whereNumber('id')->name('show');
+    Route::put   ('/{id}',     [TicketController::class, 'update'])->whereNumber('id')->name('update');
+    Route::delete('/{id}',     [TicketController::class, 'destroy'])->whereNumber('id')->name('destroy');
+
+    Route::get('status/{status}', [TicketController::class, 'byStatus'])
+        ->where('status', '[A-Za-z0-9_\-]+')
+        ->name('byStatus');
+        
+       // Convenience routes for common statuses
+    Route::get('pending',  [TicketController::class, 'byStatus'])->defaults('status', 'pending')->name('pending');
+    Route::get('answered', [TicketController::class, 'byStatus'])->defaults('status', 'answered')->name('answered');
+    Route::get('closed',   [TicketController::class, 'byStatus'])->defaults('status', 'closed')->name('closed');    
+});
