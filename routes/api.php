@@ -14,7 +14,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\ReferralPayoutController;
-
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -142,6 +143,7 @@ Route::prefix('categories')->group(function () {
 
 
 
+
 //Orders management
 Route::prefix('orders')->group(function () {
     Route::get('/', [OrderController::class, 'index']);
@@ -178,4 +180,36 @@ Route::prefix('referral-payouts')->group(function () {
     Route::get('/{id}', [ReferralPayoutController::class, 'show']);
     Route::put('/{id}', [ReferralPayoutController::class, 'update']);
     Route::delete('/{id}', [ReferralPayoutController::class, 'destroy']);
+});
+//..................client....................................................
+
+// routes/api.php
+
+Route::get   ('/clients',       [ClientController::class, 'index']);
+Route::get   ('/clients/{id}',  [ClientController::class, 'show']);
+Route::post  ('/clients',       [ClientController::class, 'store']);
+Route::put   ('/clients/{id}',  [ClientController::class, 'update']);
+Route::delete('/clients/{id}',  [ClientController::class, 'destroy']);
+
+
+//....................................ticket............................................................
+
+
+
+
+Route::prefix('tickets')->name('tickets.')->group(function () {
+    Route::get   ('/',         [TicketController::class, 'index'])->name('index');
+    Route::post  ('/',         [TicketController::class, 'store'])->name('store');
+    Route::get   ('/{id}',     [TicketController::class, 'show'])->whereNumber('id')->name('show');
+    Route::put   ('/{id}',     [TicketController::class, 'update'])->whereNumber('id')->name('update');
+    Route::delete('/{id}',     [TicketController::class, 'destroy'])->whereNumber('id')->name('destroy');
+
+    Route::get('status/{status}', [TicketController::class, 'byStatus'])
+        ->where('status', '[A-Za-z0-9_\-]+')
+        ->name('byStatus');
+        
+       // Convenience routes for common statuses
+    Route::get('pending',  [TicketController::class, 'byStatus'])->defaults('status', 'pending')->name('pending');
+    Route::get('answered', [TicketController::class, 'byStatus'])->defaults('status', 'answered')->name('answered');
+    Route::get('closed',   [TicketController::class, 'byStatus'])->defaults('status', 'closed')->name('closed');    
 });
