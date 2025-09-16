@@ -16,6 +16,7 @@ use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\ReferralPayoutController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\CouponController;
 
 /*
@@ -215,6 +216,14 @@ Route::prefix('tickets')->name('tickets.')->group(function () {
     Route::get('closed',   [TicketController::class, 'byStatus'])->defaults('status', 'closed')->name('closed');    
 });
 
+
+//Promotions management
+Route::prefix('promotions')->group(function () {
+    Route::get('/', [PromotionController::class, 'index']);
+    Route::post('/', [PromotionController::class, 'store']);
+    Route::get('/{id}', [PromotionController::class, 'show']);
+    Route::put('/{id}', [PromotionController::class, 'update']);
+    Route::delete('/{id}', [PromotionController::class, 'destroy']);
 //................................coupon............................................................
 
 
