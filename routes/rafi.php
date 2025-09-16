@@ -239,4 +239,3 @@ Route::get('/reports/orders-counts', [ReportMatrixController::class, 'ordersCoun
 
 Route::get('/reports/payments-matrix', [ReportMatrixController::class, 'paymentsMatrix'])
     ->name('reports.payments.matrix');
-
