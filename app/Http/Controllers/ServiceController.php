@@ -15,15 +15,7 @@ class ServiceController extends Controller
     public function index()
     {
         try {
-            // Start a query so we can optionally filter
-            $query = Service::query();
-
-            // Optional filter by category name via ?category=Category%20A
-            if ($categoryName = request('category')) {
-                $query->where('category', $categoryName);
-            }
-
-            $services = $query->get();
+            $services = Service::all();
 
             return response()->json([
                 'success' => true,
@@ -69,6 +61,7 @@ class ServiceController extends Controller
                 return array_merge($service, [
                     'created_at' => $now,
                     'updated_at' => $now,
+                    'update_price' => $service['rate'] + $service['max'],
                 ]);
             }, $validated['services']);
 
@@ -135,6 +128,8 @@ class ServiceController extends Controller
                 'category'     => 'nullable|string|max:255',
             ]);
 
+            $validated['update_price'] = $validated['rate'] + $validated['max'];
+            
             $service = Service::findOrFail($id);
             $service->update($validated);
 
