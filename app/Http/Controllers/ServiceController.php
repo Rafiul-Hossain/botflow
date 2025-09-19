@@ -15,7 +15,15 @@ class ServiceController extends Controller
     public function index()
     {
         try {
-            $services = Service::all();
+            // Start a query so we can optionally filter
+            $query = Service::query();
+
+            // Optional filter by category name via ?category=Category%20A
+            if ($categoryName = request('category')) {
+                $query->where('category', $categoryName);
+            }
+
+            $services = $query->get();
 
             return response()->json([
                 'success' => true,
