@@ -12,7 +12,13 @@ class ServiceController extends Controller
     /**
      * Display a listing of services.
      */
-public function index(Request $request)
+
+
+
+
+
+
+    public function index(Request $request)
 {
     try {
         $query = Service::query();
@@ -44,10 +50,6 @@ public function index(Request $request)
         ], 500);
     }
 }
-
-
-
-
 
     /**
      * Store a newly created service.
